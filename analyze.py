@@ -6,9 +6,6 @@ from litellm import completion
 # You can replace these with other models as needed but this is the one we suggest for this lab.
 MODEL = "groq/llama-3.3-70b-versatile"
 
-api_key = "hardcoded API_KEY HERE"
-
-
 def get_itinerary(destination: str) -> Dict[str, Any]:
     """
     Returns a JSON-like dict with keys:
