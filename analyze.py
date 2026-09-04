@@ -47,7 +47,18 @@ def get_itinerary(destination: str) -> Dict[str, Any]:
         response_format={"type": "json_object"},
     )
 
-    data = Itinerary(**json.loads(response.choices[0].message.content)).model_dump()
+    # the model reply comes back as one json string
+    raw_text = response.choices[0].message.content
+
+    # turn that string into a python dict
+    parsed = json.loads(raw_text)
+
+    # check the dict against the Itinerary schema
+    # this raises an error if a field is missing or has the wrong type
+    validated = Itinerary(**parsed)
+
+    # convert back to a plain dict so flask can send it as json
+    data = validated.model_dump()
 
 
     return data
